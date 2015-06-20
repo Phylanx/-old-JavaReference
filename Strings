@@ -1,0 +1,26 @@
+public class JavaReference {
+ public static void main (String[] args) {
+ 
+  //initiate  a string vareable
+ String myFirstString;
+ 
+ //then assign a value to it
+ myFirstString = "Hello World!";
+ 
+ //or do both steps at once
+ String mySecondString = "Hello World!";
+ 
+ //now let's see how many charactors are in the string
+ myFirstString.lenght();
+ //output should be 12
+ 
+ //now let's grab a part of the string and assign it to a vareable
+ mySecondString = myFirstString.substring(0,5);
+ //substring created starting at index 0 of myFirstString and ending before index 5
+ //if the second int had been omitted the substring would terminate at the end of the string
+ //now mySecondString is "Hello"
+ 
+ //end the main section
+  }
+//end the JavaReference class
+}
