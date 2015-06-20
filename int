@@ -1,3 +1,5 @@
 public class Integers {
   public static void main (String[] args) {
-    int 
+    int number = 10;
+    int.Math.abs(number-12);
+    //output will be 2 (absolute value of the variable number minus 12)
