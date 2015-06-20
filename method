@@ -1,0 +1,28 @@
+public class MethodTime {
+  public static void main (String[] args) {
+    int i = 5;
+    String s = "hey ";
+    String words = "I have diarrhea";
+    i = timesFive(i);
+    s = timesFive(s);
+    words = yelling(words);
+    System.out.println(i);
+    System.out.println(s);
+    System.out.println(words);
+    }
+    
+    //my first method
+  public static int timesFive (int five) {
+    return five * 5;
+    }
+  
+  //my second method
+  public static String timesFive (String five) {
+    return five + five + five + five + five;
+    }
+    
+  //and so on...
+  public static String yelling (String str) {
+    return str.toUpperCase();
+    }
+  }
