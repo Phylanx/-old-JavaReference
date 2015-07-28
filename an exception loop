@@ -1,0 +1,16 @@
+Boolean y = false;
+int num;
+Scanner eats = new Scanner(System.in);
+while (y==false)
+   {
+    System.out.println("Tell me a whole number");
+      try {
+          num = eats.nextInt();
+          System.out.println(num);
+          y = true;
+          }catch (Exception e){
+                System.out.println("Hey, hey, hey...\n" +e);
+                eats.next();
+                continue;
+            }
+            }
