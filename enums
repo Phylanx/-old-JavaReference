@@ -1,0 +1,34 @@
+public class HelloWorld
+{
+  
+  enum Light {RED ("Stop", "Top"),
+              GREEN ("Go", "Bottom"),
+              YELLOW ("Yeild", "Middle");
+              
+              private final String Action;
+              private final String Placement;
+              
+              Light(String Action, String Placement){
+                this.Action=Action;
+                this.Placement=Placement;
+              }
+              
+              public String Action(){
+                return Action;
+              }
+              
+              public String Placement(){
+                return Placement;
+              }
+             }
+  
+  public static void main(String[] args)
+  {
+    
+    Light t = Light.YELLOW	;
+    
+    System.out.println(t.Action + " for the " + t + " light.\nIt's the one at/in the " + t.Placement + ".");
+  }
+  
+  
+}
