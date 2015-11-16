@@ -1,0 +1,79 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+#include "batfunk.h"
+
+using namespace std;
+
+
+main() {
+    unsigned key[101];
+    setAllTo(key, 0);
+    char board[100];
+    setAllTo(board, '~');
+    show(key);
+    unsigned boats[] = {2, 3, 3, 4, 5};
+    unsigned count = 0;
+    srand(time(0));
+    while(count < 5) {
+        unsigned x, y;
+        bool vertical;
+        x = rand() % 10;
+        y = rand() % 10;
+        vertical = static_cast<bool>(rand() % 2);
+        unsigned id = toId(toIndex(x,y), boats[count], vertical);
+        if(validShipLocation(key, x, y, boats[count], vertical)) {
+            setShipTo(key, toIndex(x, y), boats[count], vertical, id);
+            count++;
+            key[100]++;
+        } else {
+            continue;
+        }
+
+    }
+
+    //start the game...
+    while(key[100] > 0) {
+        show(key);
+        show(board);
+        unsigned xCoord, yCoord;
+        cout << "Ready to fire..."
+             << "\nEnter your horizontal coordinate : ";
+        cin >> xCoord;
+        cout << "\nEnter your vertical coordinate : ";
+        cin >> yCoord;
+        unsigned index = toIndex(xCoord, yCoord), length, newId;
+        bool alignment = static_cast<bool>(key[index] / 10000);
+        if(board[index] != '~') {
+            cout << "\nInvalid coordinates, try again.";
+            continue;
+        } else if (key[index] > 0) {
+            cout << "\nHIT!";
+            board[index] = '!';
+            newId = key[index] - 1;
+            length = key[index] / 10 % 10;
+            setShipTo(key, index, length, alignment, newId);
+        } else {
+            cout << "\nMISS!";
+            board[index] = '@';
+            continue;
+        }
+        if(newId % 10 == 0) {
+            cout << "\n   *************************************"
+                 << "\n *****************************************"
+                 << "\n******* YOU SUNK MY BATTLESHIP!!! *********"
+                 << "\n *****************************************"
+                 << "\n   *************************************\n\n";
+            if((key[100]--) == 0) break;
+            setShipTo(board, index, length, alignment, '#');
+            cout << key[100] << " more to go...";
+        }
+    }
+
+cout << "\n\nyou won.";
+
+
+
+    return 0;
+}
