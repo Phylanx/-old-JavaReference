@@ -1,0 +1,29 @@
+#ifndef BATFUNK_H
+#define BATFUNK_H
+
+void show(unsigned array[101]);
+
+void show(char array[100]);
+
+void setAllTo(char array[100], char setTo);
+
+void setAllTo(unsigned array[101], unsigned setTo);
+
+void setShipTo(char array[100], unsigned startIndex, unsigned length, bool vertical, char setTo);
+
+void setShipTo(unsigned array[100], unsigned startIndex, unsigned length, bool vertical, unsigned setTo);
+
+unsigned toIndex(unsigned x, unsigned y);
+
+void to_x_y(unsigned index, unsigned &x, unsigned &y);
+
+unsigned toId(unsigned x, unsigned y, unsigned length, bool vertical);//////
+
+unsigned toId(unsigned index, unsigned length, bool vertical);/////
+
+bool validShipLocation(unsigned keyArray[100], unsigned x, unsigned y, unsigned length, bool vertical);
+
+
+
+#endif // BATFUNK_H
+
