@@ -1,0 +1,139 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include "batfunk.h"
+
+using namespace std;
+
+
+void show(unsigned array[101]) {
+    cout << "\nKey array : " << array[100] << " active ships\n";
+    for(unsigned i = 0; i < 100; i++) {
+        cout << setw(7) << array[i];
+        if(i%10 == 9) cout << "\n\n";
+    }
+}
+
+void show(char array[100]) {
+    cout << endl;
+    //top boarder
+    cout << setw(7) << ' ';
+    for(unsigned i = 0; i < 10; i++) {
+        cout << setw(4) << i;
+    }
+    cout << endl << setw(6) << ' ';
+    for(unsigned k = 0; k < 44; k++) {
+        cout << "-";
+    }
+    cout << endl;
+
+
+    //board
+    for(unsigned y = 0; y < 10; y++) {
+        for(unsigned x = 0; x < 10; x++) {
+            if(x % 10 == 0) { //left boarder
+                cout << setw(3) << y << setw(4) << '|';
+            }
+            cout << setw(4) << array[x + y * 10];
+            if(x % 10 == 9) {
+                cout << setw(3) << '|';
+            }
+        }
+
+        if(y % 10 != 9) cout << endl << setw(7) << '|' << setw(43) << '|' << endl;
+    }
+
+    //bottom boarder
+    cout << endl << setw(6) << ' ';
+    for(unsigned k = 0; k < 44; k++) {
+        cout << "-";
+    }
+    cout << endl;
+
+}
+
+void setAllTo(char array[100], char setTo) {
+    for(unsigned i = 0; i < 100; i++) {
+        array[i] = setTo;
+    }
+}
+
+void setAllTo(unsigned array[101], unsigned setTo) {
+    for(unsigned i = 0; i < 101; i++) {
+        array[i] = setTo;
+    }
+}
+
+void setShipTo(char array[100], unsigned startIndex, unsigned length, bool vertical, char setTo) {
+    if(vertical) {
+        for(unsigned i = 0; i < length; i++) {
+            array[startIndex + i * 10] = setTo;
+        }
+    } else {
+        for(unsigned i = 0; i < length; i++) {
+            array[startIndex + i] = setTo;
+        }
+    }
+}
+
+void setShipTo(unsigned array[100], unsigned startIndex, unsigned length, bool vertical, unsigned setTo) {
+    if(vertical) {
+        for(unsigned i = 0; i < length; i++) {
+            array[startIndex + i * 10] = setTo;
+        }
+    } else {
+        for(unsigned i = 0; i < length; i++) {
+            array[startIndex + i] = setTo;
+        }
+    }
+}
+
+unsigned toIndex(unsigned x, unsigned y) {
+    return x * 10 + y;
+}
+
+void to_x_y(unsigned index, unsigned &x, unsigned &y) {
+    x = index / 10;
+    y = index % 10;
+}
+
+unsigned toId(unsigned x, unsigned y, unsigned length, bool vertical) {
+    return length + (length * 10) + (y * 100) + (x * 1000) + (vertical * 10000);
+}
+
+unsigned toId(unsigned index, unsigned length, bool vertical) {
+    return length + (length * 10) + (index * 100) + (vertical * 10000);
+}
+
+bool validShipLocation(unsigned keyArray[100], unsigned x, unsigned y, unsigned length, bool vertical) {
+    if(x >= 10 || y >= 10) return false; //checks if start location is out of bounds
+    if(keyArray[x + y * 10] != 0) return false; //if not empty
+
+    if(vertical) {//vertical orientation
+        for(unsigned i = 0; i < length; i++) {
+            if(keyArray[toIndex(x, y) + 10 * i] != 0 || y + i >= 10) return false;//if keyArray is not empty or if it is out of bounds
+        }
+    } else { //horizontal orientation
+        for(unsigned i = 0; i < length; i++) {
+            if(keyArray[toIndex(x, y) + i] != 0 || x + i >= 10) return false;//if keyArray is not empty or if it is out of bounds
+        }
+    }
+    return true;
+}
+
+bool validShipSpot(unsigned keyArray[], unsigned x, unsigned y, unsigned length, bool vertical) {
+    if(x >= 10 || y >=10) return false;
+    if(keyArray[x + y * 10] != 0) return false;
+    if(vertical) {
+        for(unsigned i = 0; i < length; i++) {
+            if(y + i >= 10) return false;
+            if(keyArray[x + y * 10] != 0) return false;
+        }
+    } else {
+        for(unsigned i = 0; i < length; i++) {
+            if(x + i >=10) return false;
+            if(keyArray[x + i * 10] !=0) return false;
+        }
+    }
+    return true;
+}
